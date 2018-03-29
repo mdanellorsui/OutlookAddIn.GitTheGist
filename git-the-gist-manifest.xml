@@ -7,7 +7,7 @@
           xsi:type="MailApp">
 
   <!-- Begin Basic Settings: Add-in metadata, used for all versions of Office unless override provided. -->
-
+  <!-- just a comment -->
   <!-- IMPORTANT! Id must be unique for your add-in, if you reuse this manifest ensure that you change this id to a new GUID. -->
   <Id>da86e223-b2ad-4e0a-b501-c56988934bb8</Id>
 
