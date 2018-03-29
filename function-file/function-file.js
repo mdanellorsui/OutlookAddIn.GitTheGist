@@ -8,23 +8,39 @@ Office.initialize = function(reason) {
 
 // Add any ui-less function here
 function showError(error) {
-	Office.context.mailbox.item.notificatoinMessages.replaceAsync('github-error',  {
-		type: 'errorMessage',
+	Office.context.mailbox.item.notificationMessages.replaceAsync('progress',  {
+		type: 'progressIndicator',
 		message: error
-	}, function(result) {
 	});
 }
 
 var settingsDialog;
 
-function doNothing() {
-	alert('hello');
-}
+
 
 function insertDefaultGist(event) {
+
+	Office.context.mailbox.item.notificationMessages.replaceAsync("progress", {
+		type: "progressIndicator",
+		message : "MAAARK!!!!!!!! config:" + JSON.stringify(config)
+	  });
+
+	  Office.context.mailbox.item.notificationMessages.replaceAsync("github-error", {
+		type: "informationalMessage",
+		message: "WHERE AM I????:" + JSON.stringify(config),
+		icon : "iconid",
+        persistent: false
+	  });
+
+
+	 
 	// check if the add-in has been configured
 	if ( config && config.defaultGistId) {
 		// Get the default Gist content and insertDefaultGist
+		Office.context.mailbox.item.notificationMessages.replaceAsync("error", {
+			type: "errorMessage",
+			message : "GETTING GIST!!!!"
+		  });
 		try {
 			getGist(config.defaultGistId, function(gist, error) {
 				if (gist) {
@@ -50,18 +66,28 @@ function insertDefaultGist(event) {
 		}
 	} else {
 		// save the event object so we can finish up later
-		
-		btnEvent = event;
-		// Not Configured yet, display settings diaLOG WITH
-		// WARN=1 TO display warning
-		var url = new URI('../settings/dialog.html?warn=1').absoluteTo(window.location.toString();
-		var dialogOptions = {width:20, height: 40, displayInIframe: true};
-		
-		Office.context.ui.displayDialogAsync(url, dialogOptions, function(result) {
-			settingsDialog = result.value;
-			settingsDialog.addEventHandler(Microsoft.Office.WebExtension.EventType.DialogMessageReceived, receiveMessage);
-			settingsDialog.addEventHandler(Microsoft.Office.WebExtension.EventType.DialogEventReceived, dialogClosed;)
-		});
+		try {
+			Office.context.mailbox.item.notificationMessages.replaceAsync("progress", {
+				type: "progressIndicator",
+				message : "MIKE!!!!!!!! Now we are down here."
+			  });
+			btnEvent = event;
+			// Not Configured yet, display settings diaLOG WITH
+			// WARN=1 TO display warning
+			var url = new URI('../settings/dialog.html?warn=1').absoluteTo(window.location).toString();
+			var dialogOptions = {width:20, height: 40, displayInIframe: false};
+			
+			Office.context.ui.displayDialogAsync(url, dialogOptions, function(result) {
+				settingsDialog = result.value;
+				settingsDialog.addEventHandler(Microsoft.Office.WebExtension.EventType.DialogMessageReceived, receiveMessage);
+				settingsDialog.addEventHandler(Microsoft.Office.WebExtension.EventType.DialogEventReceived, dialogClosed);
+			});
+	
+		}
+		catch (err) {
+			showError(err);
+			event.completed();
+		}
 	}
 }
 
