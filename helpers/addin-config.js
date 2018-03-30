@@ -1,13 +1,12 @@
 function getConfig() {
 	var config = {};
 	
-	//config.gitHubUserName = Office.context.romingSettings.get('gitHubUserName');
-	//config.defaultGistId = Office.context.roamingSettings.get('defaultGistId');
+	config.gitHubUserName = Office.context.roamingSettings.get('gitHubUserName');
+	config.defaultGistId = Office.context.roamingSettings.get('defaultGistId');
 
 	// config.gitHubUserName = 'mstarrrsui';
-	// config.defaultGistId = 28;
+	// config.defaultGistId = 12;
 
-	
 	return config;
 }
 
