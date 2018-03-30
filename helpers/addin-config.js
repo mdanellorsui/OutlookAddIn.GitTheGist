@@ -4,8 +4,8 @@ function getConfig() {
 	//config.gitHubUserName = Office.context.romingSettings.get('gitHubUserName');
 	//config.defaultGistId = Office.context.roamingSettings.get('defaultGistId');
 
-	config.gitHubUserName = 'mstarrrsui';
-	config.defaultGistId = 28;
+	// config.gitHubUserName = 'mstarrrsui';
+	// config.defaultGistId = 28;
 
 	
 	return config;

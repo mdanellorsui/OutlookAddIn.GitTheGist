@@ -20,27 +20,27 @@ var settingsDialog;
 
 function insertDefaultGist(event) {
 
-	Office.context.mailbox.item.notificationMessages.replaceAsync("progress", {
-		type: "progressIndicator",
-		message : "MAAARK!!!!!!!! config:" + JSON.stringify(config)
-	  });
+	// Office.context.mailbox.item.notificationMessages.replaceAsync("progress", {
+	// 	type: "progressIndicator",
+	// 	message : "MAAARK!!!!!!!! config:" + JSON.stringify(config)
+	//   });
 
-	  Office.context.mailbox.item.notificationMessages.replaceAsync("github-error", {
-		type: "informationalMessage",
-		message: "WHERE AM I????:" + JSON.stringify(config),
-		icon : "iconid",
-        persistent: false
-	  });
+	// Office.context.mailbox.item.notificationMessages.replaceAsync("github-error", {
+	// type: "informationalMessage",
+	// message: "WHERE AM I????:" + JSON.stringify(config),
+	// icon : "iconid",
+	// persistent: false
+	// });
 
+	Office.context.mailbox.item.notificationMessages.replaceAsync("progress1", {
+		type: "errorMessage",
+		message : "Checking config, gitHubUserName:" + config.gitHubUserName + ' Default Gist Id: ' + config.defaultGistId
+	  });
 
 	 
 	// check if the add-in has been configured
 	if ( config && config.defaultGistId) {
 		// Get the default Gist content and insertDefaultGist
-		Office.context.mailbox.item.notificationMessages.replaceAsync("error", {
-			type: "errorMessage",
-			message : "GETTING GIST!!!!"
-		  });
 		try {
 			getGist(config.defaultGistId, function(gist, error) {
 				if (gist) {
@@ -67,9 +67,9 @@ function insertDefaultGist(event) {
 	} else {
 		// save the event object so we can finish up later
 		try {
-			Office.context.mailbox.item.notificationMessages.replaceAsync("progress", {
+			Office.context.mailbox.item.notificationMessages.replaceAsync("progress2", {
 				type: "progressIndicator",
-				message : "MIKE!!!!!!!! Now we are down here."
+				message : "Setting the Config ...."
 			  });
 			btnEvent = event;
 			// Not Configured yet, display settings diaLOG WITH
