@@ -4,7 +4,6 @@
 	// The office initialize function must be run each time a new page is loaded
 	Office.initialize = function(reason) {
 		jQuery(document).ready(function() {
-			debugger;	
 			if (window.location.search) {
 				
 				// Check if warning should be displayed
