@@ -2,9 +2,11 @@
 	'use strict';
 	
 	// The office initialize function must be run each time a new page is loaded
-	Office.initalize = function(reason) {
+	Office.initialize = function(reason) {
 		jQuery(document).ready(function() {
+			debugger;	
 			if (window.location.search) {
+				
 				// Check if warning should be displayed
 				var warn = getParameterByName('warn');
 				if (warn) {
@@ -12,7 +14,7 @@
 				} else {
 					// See if the config values were passed
 					// if so, pre-populate the values
-					var user = getParameterByName('getHubUserName');
+					var user = getParameterByName('gitHubUserName');
 					var gistId = getParameterByName('defaultGistId');
 					
 					$('#github-user').val(user);
@@ -27,7 +29,7 @@
 				}
 			}
 			
-			// Wehn the GitHub username changes, 
+			// When the GitHub username changes, 
 			// try to load Gists
 			$('#github-user').on('change', function() {
 				$('#gist-list').empty();
@@ -39,11 +41,11 @@
 			
 			// When the Done button is clicked, send the 
 			// values back to the caller as a serialized
-			// object
+			// object.
 			$('#settings-done').on('click', function() {
 				var settings = {};
 				
-				settings.gitHubUserName = $('#gethub-user').val();
+				settings.gitHubUserName = $('#github-user').val();
 				
 				var selectedGist = $('li.is-selected');
 				if (selectedGist) {
@@ -60,7 +62,7 @@
 	function loadGists(user, callback) {
 		getUserGists(user, function(gists, error) {
 			if (error) {
-				$('.gist-list-conatiner').hide();
+				$('.gist-list-container').hide();
 				$('#error-text').text(JSON.stringify(error, null, 2));
 				$('.error-display').show();
 				if (callback) callback(false);
@@ -89,8 +91,8 @@
 			url = window.location.href;
 		}
 		name = name.replace(/[\[\]]/g, "\\$&");
-		var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$"), results = regex.exec(url);
-		
+		var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+			results = regex.exec(url);
 		if (!results) return null;
 		if (!results[2]) return '';
 		return decodeURIComponent(results[2].replace(/\+/g, " "));
