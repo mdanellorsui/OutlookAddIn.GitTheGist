@@ -75,7 +75,7 @@ function insertDefaultGist(event) {
 			// Not Configured yet, display settings diaLOG WITH
 			// WARN=1 TO display warning
 			var url = new URI('../settings/dialog.html?warn=1').absoluteTo(window.location).toString();
-			var dialogOptions = {width:20, height: 40, displayInIframe: false};
+			var dialogOptions = {width:40, height: 60, displayInIframe: true};
 			
 			Office.context.ui.displayDialogAsync(url, dialogOptions, function(result) {
 				settingsDialog = result.value;
