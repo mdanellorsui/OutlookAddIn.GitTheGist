@@ -2,7 +2,7 @@ function getConfig() {
 	var config = {};
 	
 	// to force the addin to request the config settings
-	//deleteConfig();
+	deleteConfig();
 
 	config.gitHubUserName = Office.context.roamingSettings.get('gitHubUserName');
 	config.defaultGistId = Office.context.roamingSettings.get('defaultGistId');

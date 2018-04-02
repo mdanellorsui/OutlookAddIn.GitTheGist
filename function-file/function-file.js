@@ -1,17 +1,16 @@
 var config;
 var btnEvent;
 
-// The initialize function must be run each time a new page is loaded
-Office.initialize = function(reason) {
-	config = getConfig();
-}
+Office.initialize = function () {
+  config = getConfig();
+};
 
-// Add any ui-less function here
 function showError(error) {
-	Office.context.mailbox.item.notificationMessages.replaceAsync('progress',  {
-		type: 'progressIndicator',
-		message: error
-	});
+  Office.context.mailbox.item.notificationMessages.replaceAsync('github-error', {
+    type: 'errorMessage',
+    message: error
+  }, function(result){
+  });
 }
 
 var settingsDialog;
@@ -75,7 +74,7 @@ function insertDefaultGist(event) {
 			// Not Configured yet, display settings diaLOG WITH
 			// WARN=1 TO display warning
 			var url = new URI('../settings/dialog.html?warn=1').absoluteTo(window.location).toString();
-			var dialogOptions = {width:40, height: 60, displayInIframe: true};
+			var dialogOptions = { width: 20, height: 40, displayInIframe: true };
 			
 			Office.context.ui.displayDialogAsync(url, dialogOptions, function(result) {
 				settingsDialog = result.value;

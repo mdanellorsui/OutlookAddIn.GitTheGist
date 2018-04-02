@@ -51,19 +51,20 @@ function buildGistList(parent, gists, clickFunc) {
 }
 
 function buildFileList(files) {
-	
-	var fileList = '';
-	
-	for (var file in files) {
-		if (files.hasOwnProperty(file)) {
-			if (fileList.length > 0) {
-				fileList = fileList + ', ';
-			}
-			fileList = fileList + files[file].filename + ' (' + files[file].language + ')';
-		}
-	}
-	
-	return fileList
+  
+  var fileList = '';
+
+  for (var file in files) {
+    if (files.hasOwnProperty(file)) {
+      if (fileList.length > 0) {
+        fileList = fileList + ', ';
+      }
+
+      fileList = fileList + files[file].filename + ' (' + files[file].language + ')';
+    }
+  }
+
+  return fileList;
 }
 
 
