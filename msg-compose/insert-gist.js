@@ -17,29 +17,60 @@
         $('#not-configured').show();
       }
 
+      // // When insert button is clicked, build the content
+      // // and insert into the body.
+      // $('#insert-button').on('click', function(){
+      //   var gistId = $('.ms-ListItem.is-selected').children('.gist-id').val();
+      //   getGist(gistId, function(gist, error) {
+      //     if (gist) {
+      //       buildBodyContent(gist, function (content, error) {
+      //         if (content) {
+      //           Office.context.mailbox.item.body.setSelectedDataAsync(content,
+      //             {coercionType: Office.CoercionType.Html}, function(result) {
+      //               if (result.status == 'failed') {
+      //                 showError('Could not insert Gist: ' + result.error.message);
+      //               }
+      //           });
+      //         } else {
+      //           showError('Could not create insertable content: ' + error);
+      //         } 
+      //       });
+      //     } else {
+      //       showError('Could not retreive Gist: ' + error);
+      //     }
+      //   });
+      // });
+
+      // new code for rsui forms
       // When insert button is clicked, build the content
       // and insert into the body.
+
       $('#insert-button').on('click', function(){
-        var gistId = $('.ms-ListItem.is-selected').children('.gist-id').val();
-        getGist(gistId, function(gist, error) {
-          if (gist) {
-            buildBodyContent(gist, function (content, error) {
-              if (content) {
-                Office.context.mailbox.item.body.setSelectedDataAsync(content,
-                  {coercionType: Office.CoercionType.Html}, function(result) {
-                    if (result.status == 'failed') {
-                      showError('Could not insert Gist: ' + result.error.message);
-                    }
-                });
-              } else {
-                showError('Could not create insertable content: ' + error);
-              } 
-            });
-          } else {
-            showError('Could not retreive Gist: ' + error);
+        writeMessage('Insert forms button was Pressed');
+
+        Office.context.mailbox.item.addFileAttachmentAsync(
+          'http://rsuidocapp/formslibrary/api/catalogs/download/doc/12746',
+          'Commercial Property Coverage Part Declarations.pdf',
+          { asyncContext: null },
+          function(asyncResult) {
+            if (asyncResult.status == Office.AsyncResultStatus.Failed) {
+              writeMessage('Error: ' + asyncResult.error.message);
+            } else {
+              // Get the ID of the attached file.
+              var attachmentID = asyncResult.value;
+              writeMessage("ID of added attachment: " + attachmentID);
+            }
           }
-        });
+        );
+
+        writeMessage('Attach form has been called ...');
+          
       });
+      
+
+
+      // end new code for rsui forms
+
 
       // When the settings icon is clicked, open the settings dialog
       $('#settings-icon').on('click', function(){
@@ -101,4 +132,18 @@
   function dialogClosed(message) {
     settingsDialog = null;
   }
+
+  function writeMessage(message) {
+ 
+    //Office.context.mailbox.item.notificationMessages.removeAsync("addin-message");
+
+    Office.context.mailbox.item.notificationMessages.replaceAsync("addin-message", {
+      type: "informationalMessage",
+      message: message,
+      icon : "iconid",
+      persistent: true
+
+    });        
+  }
+
 })();
